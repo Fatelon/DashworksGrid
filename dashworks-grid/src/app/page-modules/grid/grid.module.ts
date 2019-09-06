@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppGridComponent } from './grid/grid.component';
-import {AppGridDataController} from "./_data-controller/data-controller";
+import { AppGridModule } from '../../common/modules/grid/grid.module';
+import { AppGridDataController } from './_data-controller/data-controller';
+import { AppGridPageComponent } from './grid/grid.component';
 
 @NgModule({
   declarations: [
-    AppGridComponent
+    AppGridPageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    AppGridModule
   ],
   exports: [
-    AppGridComponent
+    AppGridPageComponent
   ],
   providers: [
     AppGridDataController
   ]
 })
-export class AppGridModule { }
+export class AppGridPageModule { }
