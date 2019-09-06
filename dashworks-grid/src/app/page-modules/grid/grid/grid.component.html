@@ -1,7 +1,11 @@
-<p>grid works!</p>
 <ag-grid-angular
-  #agGrid
-  style="width: 100%; height: 200px;"
-  class="ag-theme-balham"
+  class="ag-theme-material"
+  [rowData]="youtubeData$ | async"
+  [pagination]="pagination"
+  [paginationPageSize]="pageSize"
+  [enableColResize]="enableColResize"
+  [enableSorting]="enableSorting"
+  [rowSelection]="rowSelection"
   [gridOptions]="gridOptions"
+  (gridReady)="onGridReady($event)"
 ></ag-grid-angular>
