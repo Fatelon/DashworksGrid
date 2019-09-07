@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { YoutubeItem } from '../../models/youtube-item';
 
 @Injectable({
@@ -18,7 +18,8 @@ export class YoutubeDataService {
   public getYoutubeItems(): Observable<YoutubeItem[]> {
     return this.httpClient
       .get<any>(`${this.DATA_URL}`)
-      .pipe(map(data => data.items.map(item => new YoutubeItem(item.snippet))));
+      // .pipe(delay(2000))
+      .pipe(map(data => data.items.map(item => new YoutubeItem(Object.assign(item.snippet, item.id)))));
   }
 
 }

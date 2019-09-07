@@ -1,11 +1,48 @@
+<mat-toolbar>
+  AgGrid Toolbar:
+  <div class="toolbar-container">
+    <mat-slide-toggle [checked]="selectionMode" (change)="showCheckboxes($event.checked)">
+      Selection mode
+    </mat-slide-toggle>
+    <span>Total count of records: {{ (youtubeData$ | async)?.length || 0 }}</span>
+    <span>Selected records count: {{ selectedRowsCount || 0 }}</span>
+  </div>
+</mat-toolbar>
+
 <ag-grid-angular
   class="ag-theme-material"
   [rowData]="youtubeData$ | async"
   [pagination]="pagination"
   [paginationPageSize]="pageSize"
   [enableColResize]="enableColResize"
+  [suppressRowClickSelection]="suppressRowClickSelection"
   [enableSorting]="enableSorting"
   [rowSelection]="rowSelection"
+  [rowDeselection]="rowDeselection"
   [gridOptions]="gridOptions"
-  (gridReady)="onGridReady($event)"
+  (gridReady)="onGridReady()"
+  (gridSizeChanged)="onGridSizeChanged($event)"
+  (selectionChanged)="onSelectionChanged($event)"
 ></ag-grid-angular>
+
+
+<ng-template #customCheckboxCell let-row="row">
+  <mat-checkbox
+    [(ngModel)]="checkboxesModel[row.id]"
+    (click)="onRowCheckboxChange(row.id)"
+  ></mat-checkbox>
+</ng-template>
+
+
+<ng-template #customVideoTitleCell let-row="row">
+  <a [href]="genYoutubeLink(row?.videoId)" target="_blank">{{ row?.title }}</a>
+</ng-template>
+
+
+<ng-template #customThumbnailsCell let-row="row">
+  <img
+    class="custom-thumbnails"
+    [src]="getThumbnailsUrl(row)"
+    [ngStyle]="{ 'width': getThumbnailsSizePx(row, 'width'), 'height': getThumbnailsSizePx(row, 'height') }"
+  >
+</ng-template>
