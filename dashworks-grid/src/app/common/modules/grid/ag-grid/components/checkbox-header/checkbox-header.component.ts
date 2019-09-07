@@ -8,7 +8,8 @@ export class AgGridCheckboxHeaderComponent implements IHeaderAngularComp, OnDest
 
   private params;
   private selectionEventListener;
-  private checkboxModel = false;
+
+  checkboxModel = false;
 
   agInit(params): void {
     this.params = params;

@@ -21,17 +21,12 @@ export class AppGridPageComponent implements OnInit {
 
   private YOUTUBE_STATIC_LINC_PART = 'https://www.youtube.com/watch?v=';
 
-  private gridOptions: GridOptions;
-  private rowSelection = 'multiple';
-  private youtubeData$: Observable<YoutubeItem[]> = this.dc.youtubeData$;
+  gridOptions: GridOptions;
+  rowSelection = 'multiple';
+  youtubeData$: Observable<YoutubeItem[]> = this.dc.youtubeData$;
 
   // Additional customization
   private imgVerticalMargin = 5;
-  private pageSize = 5;
-  private pagination = true;
-  private enableSorting = true;
-  private rowDeselection = true;
-  private enableColResize = true;
   private commonCellStyle = {
     'display': 'flex',
     'align-items': 'center',
@@ -39,11 +34,13 @@ export class AppGridPageComponent implements OnInit {
     'line-height': 'unset',
     'overflow': 'auto'
   };
-
-  private selectionMode = true;
-  private suppressRowClickSelection = this.selectionMode;
-  private selectedRowsCount;
-  private checkboxesModel = {};
+  pageSize = 5;
+  pagination = true;
+  rowDeselection = true;
+  selectionMode = true;
+  suppressRowClickSelection = this.selectionMode;
+  selectedRowsCount;
+  checkboxesModel = {};
 
   constructor(private dc: AppGridDataController,
               private agGridHelper: AgGridHelper,
@@ -55,10 +52,8 @@ export class AppGridPageComponent implements OnInit {
         {
           headerName: '',
           field: 'checkbox',
-          suppressSorting: true,
           width: 40,
           resizable: false,
-          suppressCellSelection: true,
           cellStyle: { 'display': 'flex', 'align-items': 'center' },
           headerComponentFramework: AgGridCheckboxHeaderComponent,
           ...this.agGridHelper.renderWithTemplate(this.customCheckboxCell),
@@ -66,30 +61,35 @@ export class AppGridPageComponent implements OnInit {
         }, {
           headerName: '',
           field: 'thumbnails.default.url',
-          suppressSorting: true,
           width: 100,
+          menuTabs: [],
           cellStyle: { margin: this.imgVerticalMargin + 'px 0' },
           ...this.agGridHelper.renderWithTemplate(this.customThumbnailsCell)
         }, {
           headerName: 'Published on',
           field: 'publishedAt',
           width: 100,
+          menuTabs: [],
+          sortable: true,
           cellStyle: this.commonCellStyle,
           comparator: this.dateComparator,
           valueFormatter: (p) => this.appTimePipe.transform(p.value, true)
         }, {
           headerName: 'Video Title',
           field: 'title',
+          menuTabs: [],
+          sortable: true,
           cellStyle: this.commonCellStyle,
           ...this.agGridHelper.renderWithTemplate(this.customVideoTitleCell)
         }, {
           headerName: 'Description',
           field: 'description',
-          cellStyle: this.commonCellStyle,
+          menuTabs: [],
           width: 250,
-          suppressSorting: true
+          cellStyle: this.commonCellStyle
         }
       ],
+      getMainMenuItems: () => [],
       getContextMenuItems: this.getContextMenuItems,
       getRowHeight: (params) =>
         this.getThumbnailsSize(params.data, 'height') + this.imgVerticalMargin * 2,
