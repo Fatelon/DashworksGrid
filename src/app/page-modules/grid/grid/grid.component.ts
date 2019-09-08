@@ -139,7 +139,7 @@ export class AppGridPageComponent implements OnInit {
       name: 'Open in new tab',
       action: () => {
         if (!params || !params.node || !params.node.data) { return; }
-        window.open(this.genYoutubeLink(params.node.data.videoId), "_blank");
+        window.open(this.genYoutubeLink(params.node.data.videoId), '_blank');
       }
     },
     'separator',

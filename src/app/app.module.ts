@@ -15,7 +15,6 @@ import { AppGridPageModule } from './page-modules/grid/grid.module';
     HttpClientModule,
     AppGridPageModule
   ],
-  providers: [],
   bootstrap: [
     AppComponent
   ]

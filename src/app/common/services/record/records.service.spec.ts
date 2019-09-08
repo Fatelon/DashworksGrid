@@ -65,7 +65,7 @@ describe('RecordsService', () => {
   });
 
   // Normal data with some trash
-  it('should return Array of Records with filtered fields', () => {
+  it('should filter fields and return Array of Records', () => {
     const realData = {
       "kind": "youtube#searchListResponse",
       "items": [

@@ -8,8 +8,6 @@ $app-warn:    mat-palette($mat-deep-orange, 800, 900);
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 @include angular-material-theme($app-theme);
 
-//html, body { height: 100%; }
-
 mat-checkbox .mat-checkbox-inner-container {
   width: 24px;
   height: 24px;
