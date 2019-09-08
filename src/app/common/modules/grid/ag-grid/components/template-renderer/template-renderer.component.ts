@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 
 @Component({
-  template: `<ng-container [ngTemplateOutlet]="params.templateRef" [ngTemplateOutletContext]="templateContext"></ng-container>`
+  template: `<ng-container [ngTemplateOutlet]="params?.templateRef" [ngTemplateOutletContext]="templateContext"></ng-container>`
 })
 export class AgGridTemplateRendererComponent implements ICellRendererAngularComp {
 

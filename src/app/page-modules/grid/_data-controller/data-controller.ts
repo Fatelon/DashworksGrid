@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Record } from '../../../common/models/record';
-import { RecordService } from '../../../common/services/record/record.service';
+import { RecordsService } from '../../../common/services/record/records.service';
 
 @Injectable()
 export class AppGridDataController {
 
-  youtubeData$: Observable<Record[]> = this.youtubeDataService.getYoutubeItems();
+  youtubeData$: Observable<Record[]> = this.youtubeDataService.getRecords();
 
-  constructor(private youtubeDataService: RecordService) {}
+  constructor(private youtubeDataService: RecordsService) {}
 }

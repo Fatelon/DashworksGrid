@@ -23,6 +23,9 @@ export class Record implements RecordI {
     Object.keys(this).forEach((key) => {
       if (key in this && init[key]) {
         this[key] = init[key];
+        if (key === 'thumbnails') {
+          this[key] = new Thumbnails(init[key]);
+        }
       }
     });
   }

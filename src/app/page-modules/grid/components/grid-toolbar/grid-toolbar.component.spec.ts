@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSlideToggleModule } from '@angular/material';
 
 import { AppGridToolbarComponent } from './grid-toolbar.component';
 
@@ -8,6 +9,7 @@ describe('AppGridToolbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ MatSlideToggleModule ],
       declarations: [ AppGridToolbarComponent ]
     })
     .compileComponents();

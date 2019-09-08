@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
 import { Observable } from 'rxjs';
 import { Record } from '../../../common/models/record';
@@ -14,6 +14,8 @@ import { AppGridDataController } from '../_data-controller/data-controller';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppGridPageComponent implements OnInit {
+
+  @Input() selectionMode = true;
 
   @ViewChild('customCheckboxCell', { static: true }) customCheckboxCell: TemplateRef<any>;
   @ViewChild('customThumbnailsCell', { static: true }) customThumbnailsCell: TemplateRef<any>;
@@ -37,7 +39,6 @@ export class AppGridPageComponent implements OnInit {
   pageSize = 5;
   pagination = true;
   rowDeselection = true;
-  selectionMode = true;
   suppressRowClickSelection = this.selectionMode;
   selectedRowsCount;
   checkboxesModel = {};

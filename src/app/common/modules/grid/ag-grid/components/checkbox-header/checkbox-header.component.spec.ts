@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material';
 
 import { AgGridCheckboxHeaderComponent } from './checkbox-header.component';
 
@@ -8,6 +10,7 @@ describe('AgGridCheckboxHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ FormsModule, MatCheckboxModule ],
       declarations: [ AgGridCheckboxHeaderComponent ]
     })
     .compileComponents();

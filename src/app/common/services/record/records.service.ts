@@ -7,7 +7,7 @@ import { Record } from '../../models/record';
 @Injectable({
   providedIn: 'root'
 })
-export class RecordService {
+export class RecordsService {
 
   DATA_URL =
     'https://www.googleapis.com/youtube/v3/search?key=AIzaSyDOfT_BO81a' +
@@ -15,16 +15,17 @@ export class RecordService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getYoutubeItems(): Observable<Record[]> {
+  private someDataToRecordArray = (data): Record[] => {
+    if (!data || !data.items || !Array.isArray(data.items)) { return []; }
+    return data.items.map(item => {
+      if (!item || !item.snippet || !item.id) { return new Record(); }
+      return new Record(Object.assign(item.snippet, item.id));
+    });
+  };
+
+  public getRecords(): Observable<Record[]> {
     return this.httpClient
       .get<any>(`${this.DATA_URL}`)
-      .pipe(map(data => {
-        if (!data || !data.items) { return []; }
-        return data.items.map(item => {
-          if (!item) { return new Record(); }
-          return new Record(Object.assign(item.snippet, item.id));
-        });
-      }));
+      .pipe(map(this.someDataToRecordArray));
   }
-
 }
