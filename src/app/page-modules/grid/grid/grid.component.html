@@ -1,13 +1,9 @@
-<mat-toolbar>
-  AgGrid Toolbar:
-  <div class="toolbar-container">
-    <mat-slide-toggle [checked]="selectionMode" (change)="showCheckboxes($event.checked)">
-      Selection mode
-    </mat-slide-toggle>
-    <span>Total count of records: {{ (youtubeData$ | async)?.length || 0 }}</span>
-    <span>Selected records count: {{ selectedRowsCount || 0 }}</span>
-  </div>
-</mat-toolbar>
+<app-grid-toolbar
+  [selectionMode]="selectionMode"
+  [totalRecordsCount]="(youtubeData$ | async)?.length"
+  [selectedRecordsCount]="selectedRowsCount"
+  (selectionModeChange)="onSelectionModeChange($event)"
+></app-grid-toolbar>
 
 <ag-grid-angular
   class="ag-theme-material"
@@ -24,6 +20,7 @@
 ></ag-grid-angular>
 
 
+<!-- Cell templates-->
 <ng-template #customCheckboxCell let-row="row">
   <mat-checkbox
     [(ngModel)]="checkboxesModel[row.id]"
@@ -31,11 +28,9 @@
   ></mat-checkbox>
 </ng-template>
 
-
 <ng-template #customVideoTitleCell let-row="row">
   <a [href]="genYoutubeLink(row?.videoId)" target="_blank">{{ row?.title }}</a>
 </ng-template>
-
 
 <ng-template #customThumbnailsCell let-row="row">
   <img

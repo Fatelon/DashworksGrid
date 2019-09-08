@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { Thumbnails } from './thumbnails';
 
-export interface YoutubeItemI {
+export interface RecordI {
   id: string;
   thumbnails: Thumbnails;
   publishedAt: string;
@@ -10,7 +10,7 @@ export interface YoutubeItemI {
   videoId: string;
 }
 
-export class YoutubeItem implements YoutubeItemI {
+export class Record implements RecordI {
   id = uuid();
   thumbnails = new Thumbnails();
   publishedAt = '';
@@ -18,7 +18,7 @@ export class YoutubeItem implements YoutubeItemI {
   description = '';
   videoId = '';
 
-  public constructor(init?: Partial<YoutubeItemI>) {
+  public constructor(init?: Partial<RecordI>) {
     if (!init) { return; }
     Object.keys(this).forEach((key) => {
       if (key in this && init[key]) {

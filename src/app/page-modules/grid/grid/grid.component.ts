@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
 import { Observable } from 'rxjs';
-import { YoutubeItem } from '../../../common/models/youtube-item';
+import { Record } from '../../../common/models/record';
 import { AgGridCheckboxHeaderComponent } from '../../../common/modules/grid/ag-grid/components/checkbox-header/checkbox-header.component';
 import { AgGridHelper } from '../../../common/modules/grid/ag-grid/services/ag-grid-helper';
 import { AppTimePipe } from '../../../common/modules/time/pipes/time.pipe';
@@ -23,10 +23,10 @@ export class AppGridPageComponent implements OnInit {
 
   gridOptions: GridOptions;
   rowSelection = 'multiple';
-  youtubeData$: Observable<YoutubeItem[]> = this.dc.youtubeData$;
+  youtubeData$: Observable<Record[]> = this.dc.youtubeData$;
 
   // Additional customization
-  private imgVerticalMargin = 5;
+  private imgVerticalMargin = 5; // X px for top and X px for bottom
   private commonCellStyle = {
     'display': 'flex',
     'align-items': 'center',
@@ -47,6 +47,7 @@ export class AppGridPageComponent implements OnInit {
               private appTimePipe: AppTimePipe) {}
 
   ngOnInit() {
+    // Init gridOptions there because of TemplateRef usage
     this.gridOptions = <GridOptions>{
       columnDefs: [
         {
@@ -111,7 +112,7 @@ export class AppGridPageComponent implements OnInit {
     params.api.sizeColumnsToFit();
   }
 
-  showCheckboxes(show) {
+  onSelectionModeChange(show) {
     this.suppressRowClickSelection = show;
     this.gridOptions.columnApi.setColumnVisible('checkbox', show);
     this.customResize();
@@ -127,6 +128,7 @@ export class AppGridPageComponent implements OnInit {
   }
 
   customResize() {
+    // Need a double resize to remove extra scrolling
     this.gridOptions.api.sizeColumnsToFit();
     setTimeout(() => this.gridOptions.api.sizeColumnsToFit());
   }
@@ -154,11 +156,11 @@ export class AppGridPageComponent implements OnInit {
   checkThumbnailsParam = (row, param) =>
     row && row.thumbnails && row.thumbnails.default && row.thumbnails.default[param];
 
-  getThumbnailsUrl = (row: YoutubeItem) =>
+  getThumbnailsUrl = (row: Record) =>
     this.checkThumbnailsParam(row, 'url') ? row.thumbnails.default.url : '';
 
-  getThumbnailsSize = (row: YoutubeItem, param: string) =>
+  getThumbnailsSize = (row: Record, param: string) =>
     (this.checkThumbnailsParam(row, param) ? row.thumbnails.default[param] : 100);
 
-  getThumbnailsSizePx = (row: YoutubeItem, param: string) => this.getThumbnailsSize(row, param) + 'px';
+  getThumbnailsSizePx = (row: Record, param: string) => this.getThumbnailsSize(row, param) + 'px';
 }

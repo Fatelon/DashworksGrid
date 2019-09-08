@@ -1,0 +1,11 @@
+<div class="title">AgGrid Toolbar:</div>
+
+<div class="tool-container">
+  <mat-slide-toggle [checked]="selectionMode" (change)="onSelectionModeChange($event.checked)">
+    Selection mode
+  </mat-slide-toggle>
+  <span>Total count of records: {{ totalRecordsCount || 0 }}</span>
+  <span>Selected records count: {{ selectedRecordsCount || 0 }}</span>
+</div>
+
+

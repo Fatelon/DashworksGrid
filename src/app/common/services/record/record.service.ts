@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
-import { YoutubeItem } from '../../models/youtube-item';
+import { map } from 'rxjs/operators';
+import { Record } from '../../models/record';
 
 @Injectable({
   providedIn: 'root'
 })
-export class YoutubeDataService {
+export class RecordService {
 
   DATA_URL =
     'https://www.googleapis.com/youtube/v3/search?key=AIzaSyDOfT_BO81a' +
@@ -15,11 +15,16 @@ export class YoutubeDataService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getYoutubeItems(): Observable<YoutubeItem[]> {
+  public getYoutubeItems(): Observable<Record[]> {
     return this.httpClient
       .get<any>(`${this.DATA_URL}`)
-      // .pipe(delay(2000))
-      .pipe(map(data => data.items.map(item => new YoutubeItem(Object.assign(item.snippet, item.id)))));
+      .pipe(map(data => {
+        if (!data || !data.items) { return []; }
+        return data.items.map(item => {
+          if (!item) { return new Record(); }
+          return new Record(Object.assign(item.snippet, item.id));
+        });
+      }));
   }
 
 }
